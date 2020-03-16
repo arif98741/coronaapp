@@ -1,18 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
-    
-    <div id="container">
-        
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css" >
+
+    <title>Corona Live Update</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="" id="heading">CORONA LIVE UPDATE</h1>
+        </div>
+        <div class="row" style="margin-top: 100px;">
+            <div class="col-md-3">
+                <h3 class="case" id="case">Case
+                    <br><span id="case-count">0</span>
+                </h3>
+            </div>
+            <div class="col-md-3">
+                <h3 class="case" id="death">Death
+                    <br><span id="death-count">0</span>
+                </h3>
+            </div>
+
+            <div class="col-md-3">
+                <h3 class="case" id="recovered">Cured
+                    <br><span id="recovered-count">0</span>
+                </h3>
+            </div>
+            <div class="col-md-3 text-left">
+                <h4>This is a realtime CORONA VIRUS APP for giving information to worldwide. This app is getting data from https://corona.lmao.ninja/countries</h4>
+                <p class="text-center" style="margin-top: 400px;">@Developed and Maintained By: <a href="https://github.com/arif98741" target="_blank">Ariful Islam</a></p>
+            </div>
+            
+        </div>
+        <div class="row" style="margin-top: 200px;">
+            <div class="col-md-7">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>SL</th>
+                            <th>Country</th>
+                            <th>Cases</th>
+                            <th>Today Cases</th>
+                            <th>Death</th>
+                            <th>Today Death</th>
+                            <th>Recovered</th>
+                            <th>Critical</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="node_modules/jquery/dist/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        //insert data in table
+        $.ajax({
+                url: "https://corona.lmao.ninja/countries",
+                method: 'get',
+                success: function (response) {
+                    var json_data = JSON.stringify(response);
+                    var data = '';
+                    for (var i = 0; i < 163; i++) {
+                        data += '<tr>';
+                            data += "<td>" + i +"</td>";
+                            data += "<td>" + (response[i].country) +"</td>";
+                            
+                            data += "<td style='text-align:center;'>" + (response[i].cases) +"</td>";
 
-</body>
+                            /*if(response[i].cases >= 1000)
+                            {
+                                data += "<td style='text-align:center; background-color: red; color:#AE3434;'>" + (response[i].cases) +"</td>";
+
+                            }elseif(response[i].cases => 5000){
+
+                                data += "<td style='text-align:center; background-color: red; color:#B32828;'>" + (response[i].cases) +"</td>";
+
+                    
+                            }elseif(response[i].cases => 5000){
+
+                                data += "<td style='text-align:center; background-color: red; color:#B32828;'>" + (response[i].cases) +"</td>";
+
+                            }*/
+
+                            if(response[i].todayCases == 0)
+                            {
+                                data += "<td style='text-align:center; background-color: green; color:#fff;'>" + (response[i].todayCases) +"</td>";
+                            }else{
+
+                                data += "<td style='text-align:center'>" + (response[i].todayCases) +"</td>";
+                            }
+
+
+                            if(response[i].deaths == 0)
+                            {
+                                data += "<td style='text-align:center; background-color: green; color:#fff;'>" + (response[i].deaths) +"</td>";
+                            }else{
+
+                                data += "<td style='text-align:center'>" + (response[i].deaths) +"</td>";
+                            }
+
+                            if(response[i].deaths >= 50)
+                            {
+                                data += "<td style='text-align:center; background-color: red; color:#fff;'>" + (response[i].todayDeaths) +"</td>";
+                            }else{
+
+                                data += "<td style='text-align:center'>" + (response[i].todayDeaths) +"</td>";
+                            }
+                            data += "<td style='text-align:center'>" + (response[i].recovered) +"</td>";
+                            data += "<td style='text-align:center'>" + (response[i].critical) +"</td>";
+                        data +="</tr>";
+                       
+                    }
+                
+                    $('#table-body').append(data);
+                    
+                }, error: function (e) {
+                    alert(e);
+                }, async: false
+            });
+
+            //insert data in circle 
+            $.ajax({
+                url: "https://corona.lmao.ninja/all",
+                method: 'get',
+                success: function (response) {
+                    //$('#case-count').html(response.cases);
+                    var i = 0;
+                    var case_interval = setInterval(function(){
+                
+                        if(i > response.cases)
+                        {
+                            clearInterval(case_interval);
+                            $('#case-count').html(response.cases);
+                        }else{
+                            i = i+562;
+                            $('#case-count').html(i);
+                        }
+                        
+                    },-20);
+                   
+
+                    var j = 0;
+                    var death_interval = setInterval(function(){
+                
+                        if(j > response.deaths)
+                        {
+                            clearInterval(death_interval);
+                            $('#death-count').html(response.deaths);
+                        }else{
+                            j = j+112;
+                            $('#death-count').html(j);
+                        }
+                        
+                    },30);
+
+                    var k = 0;
+                    var recovered_interval = setInterval(function(){
+                
+                        if(k > response.recovered)
+                        {
+                            clearInterval(recovered_interval);
+                            $('#recovered-count').html(response.recovered);
+                        }else{
+                            k = k+1025;
+                            $('#recovered-count').html(k);
+                        }
+                        
+                    },30);
+
+                    // $('#recovered-count').html(response.recovered);
+                    
+                }, error: function (e) {
+                    alert(e);
+                }, async: false
+            });
+
+            function interValFunction(response_case,bind_id, increment_value)
+            {
+                var i = 0;
+                var case_interval = setInterval(function(){
+            
+                    if(i > response_case)
+                    {
+                        clearInterval(case_interval);
+                        $('#'+bind_id).html(response_case);
+                    }else{
+                        i = i+increment_value;
+                        $('#'+bind_id).html(i);
+                    }
+                    
+                },-20);
+            }
+
+    </script>
+    
+  </body>
 </html>
