@@ -40,7 +40,7 @@
             
         </div>
         <div class="row" style="margin-top: 200px;">
-            <div class="col-md-7">
+            <div class="col-md-9">
                 <table class="table table-bordered">
                     <thead>
                         <tr class="text-center">
@@ -83,21 +83,6 @@
                             
                             data += "<td style='text-align:center;'>" + (response[i].cases) +"</td>";
 
-                            /*if(response[i].cases >= 1000)
-                            {
-                                data += "<td style='text-align:center; background-color: red; color:#AE3434;'>" + (response[i].cases) +"</td>";
-
-                            }elseif(response[i].cases => 5000){
-
-                                data += "<td style='text-align:center; background-color: red; color:#B32828;'>" + (response[i].cases) +"</td>";
-
-                    
-                            }elseif(response[i].cases => 5000){
-
-                                data += "<td style='text-align:center; background-color: red; color:#B32828;'>" + (response[i].cases) +"</td>";
-
-                            }*/
-
                             if(response[i].todayCases == 0)
                             {
                                 data += "<td style='text-align:center; background-color: green; color:#fff;'>" + (response[i].todayCases) +"</td>";
@@ -115,7 +100,7 @@
                                 data += "<td style='text-align:center'>" + (response[i].deaths) +"</td>";
                             }
 
-                            if(response[i].deaths >= 50)
+                            if(response[i].todayDeaths >0)
                             {
                                 data += "<td style='text-align:center; background-color: red; color:#fff;'>" + (response[i].todayDeaths) +"</td>";
                             }else{
